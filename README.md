@@ -10,11 +10,11 @@ Kard és Mágia karakter alkotó segédlet (https://app.kemkas.hu)
 
 See deployment repo at: [https://github.com/morbalint/kemkas-deployment](https://github.com/morbalint/kemkas-deployment)
 
-![CI workflow](https://github.com/morbalint/kemkas/actions/workflows/ci.yml/badge.svg)
+![CI workflow](https://github.com/morbalint/kemkas-backend/actions/workflows/ci.yml/badge.svg)
 
 ## Coding readmes
 
-For frontend only see: [Frontend README](./Kemkas.Web/frontend/README.md)
+For frontend see: [Frontend README](https://github.com/morbalint/kemkas/README.md)
 
 To start development, spin up the docker-compose.yaml file and use the launchSettings.json to start the backend and frontend dev servers.
 
