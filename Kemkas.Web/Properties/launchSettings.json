@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "Kemkas.Web": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://*:7251;http://*:5174",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "launchUrl": "https://localhost:8000"
+    }
+  }
+}
