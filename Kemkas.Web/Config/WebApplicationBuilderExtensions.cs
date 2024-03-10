@@ -41,6 +41,7 @@ public static class WebApplicationBuilderExtensions
             {
                 options.ClientId = discordAuthOptions.ClientId!;
                 options.ClientSecret = discordAuthOptions.ClientSecret!;
+                options.CallbackPath = PathString.FromUriComponent("/signin/discord");
             });
         }
     }
