@@ -44,7 +44,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: morbalint/kemkas-deployment
-          ref: refs/head/main
+          ref: refs/heads/main
           path: ./deployment-repo
           clean: false
       - uses: mikefarah/yq@v4
