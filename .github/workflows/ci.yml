@@ -35,7 +35,7 @@ jobs:
           cache-to: type=gha,mode=max
           push: true
           load: true
-          tags:
+          tags: |
             registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}
             ghcr.io/${{ github.repository_owner }}/kemkas-backend:${{ env.GITHUB_SHA_SHORT }}
       - uses: actions/checkout@v4
