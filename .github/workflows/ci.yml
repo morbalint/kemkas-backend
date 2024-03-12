@@ -23,20 +23,33 @@ jobs:
         run: doctl registry login --expiry-seconds 1200
       - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - run: |
+          echo "GITHUB_SHA_SHORT=$(echo ${GITHUB_SHA::8})" >> $GITHUB_ENV
+          echo "registry.digitalocean.com/kemkas/kemkas-be:${GITHUB_SHA::8}"
+          echo "ghcr.io/${{ github.repository_owner }}/kemkas-backend:${GITHUB_SHA::8}"
       - uses: docker/build-push-action@v5
         with:
           context: .
           file: Kemkas.Web/Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          push: false
+          push: true
           load: true
-          tags: kemkas/kemkas-be:edge
-      - name: Tag container image
-        run: |
-          docker tag kemkas/kemkas-be:edge registry.digitalocean.com/kemkas/kemkas-be:${GITHUB_SHA::8}
-          docker tag kemkas/kemkas-be:edge ghcr.io/${{ github.repository_owner }}/kemkas-backend:${GITHUB_SHA::8}
-      - name: Push image to Container Registry
-        run: |
-          docker push registry.digitalocean.com/kemkas/kemkas-be:${GITHUB_SHA::8}
-          docker push ghcr.io/${{ github.repository_owner }}/kemkas-backend:${GITHUB_SHA::8}
+          tags:
+            registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}
+            ghcr.io/${{ github.repository_owner }}/kemkas-backend:${{ env.GITHUB_SHA_SHORT }}
+      - uses: actions/checkout@v4
+        with:
+          repository: morbalint/kemkas-deployment
+          ref: refs/head/main
+          path: ./deployment-repo
+          clean: false
+      - uses: mikefarah/yq@v4
+        with:
+          cmd: yq -i '.spec.template.spec.container[0].image = "registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}"' ./deployment-repo/kemkas-beta/kemkas-be-deployment.yaml
+      - run: |
+          cd ./deployment-repo
+          git config --add user.email "deployment-bot@kemkas.hu"
+          git config --add user.name "Deployment Bot"
+          git commit -a -m "deploy registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}" 
+          git push
