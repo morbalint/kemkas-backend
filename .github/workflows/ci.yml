@@ -50,7 +50,7 @@ jobs:
           ssh-key: ${{ secrets.DEPLOYMENT_REPO_DEPLOY_KEY }}
       - uses: mikefarah/yq@v4
         with:
-          cmd: yq -i '.spec.template.spec.container[0].image = "registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}"' ./deployment-repo/kemkas-beta/kemkas-be-deployment.yaml
+          cmd: yq -i '.spec.template.spec.containers[0].image = "registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}"' ./deployment-repo/kemkas-beta/kemkas-be-deployment.yaml
       - run: |
           cd ./deployment-repo
           git config --add user.email "deployment-bot@kemkas.hu"
