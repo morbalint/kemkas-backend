@@ -55,20 +55,21 @@ builder.Services.AddHealthChecks();
 builder.Services.AddCharacter1EServices();
 builder.Services.AddCharacter2EServices();
 
+// Configure the HTTP request pipeline.
 var app = builder.Build();
 app.UsePathBase("/api");
 
-// Configure the HTTP request pipeline.
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedForHeaderName = "X-Forwarded-For",
+    ForwardedHostHeaderName = "X-Forwarded-Host",
+    ForwardedProtoHeaderName = "X-Forwarded-Proto",
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto,
+    KnownNetworks = { new IPNetwork(new IPAddress([0,0,0,0]), 0) }
+});
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseForwardedHeaders(new ForwardedHeadersOptions
-    {
-        ForwardedForHeaderName = "X-Forwarded-For",
-        ForwardedHostHeaderName = "X-Forwarded-Host",
-        ForwardedProtoHeaderName = "X-Forwarded-Proto",
-        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto,
-        KnownNetworks = { new IPNetwork(new IPAddress([0,0,0,0]), 0) }
-    });
     app.UseMigrationsEndPoint();
     app.UseDeveloperExceptionPage();
 }

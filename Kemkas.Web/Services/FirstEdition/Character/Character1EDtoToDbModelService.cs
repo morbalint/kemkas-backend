@@ -32,11 +32,11 @@ public class Character1EDtoToDbModelService : ICharacter1EDtoToDbModelService
             Bolcsesseg = dto.Tulajdonsagok.Bol,
             Karizma = dto.Tulajdonsagok.Kar,
             Szint = dto.Szint,
-            Pajzs = dto.Felszereles.PajzsId,
-            Pancel = dto.Felszereles.PancelId
+            Pajzs = dto.Felszereles1E.PajzsId,
+            Pancel = dto.Felszereles1E.PancelId
         };
         karakter.KarakterKepzettsegek = ConvertKepzettsegek(dto, karakter);
-        karakter.Felszereles = dto.Felszereles.FegyverIds.Select(x => new V1Felszereles
+        karakter.Felszereles = dto.Felszereles1E.FegyverIds.Select(x => new V1Felszereles
         {
             Karakter = karakter,
             IsFegyver = true,
@@ -63,10 +63,10 @@ public class Character1EDtoToDbModelService : ICharacter1EDtoToDbModelService
         original.Bolcsesseg = dto.Tulajdonsagok.Bol;
         original.Karizma = dto.Tulajdonsagok.Kar;
         original.Szint = dto.Szint;
-        original.Pajzs = dto.Felszereles.PajzsId;
-        original.Pancel = dto.Felszereles.PancelId;
+        original.Pajzs = dto.Felszereles1E.PajzsId;
+        original.Pancel = dto.Felszereles1E.PancelId;
         original.KarakterKepzettsegek = ConvertKepzettsegek(dto, original);
-        original.Felszereles = dto.Felszereles.FegyverIds.Select(x => new V1Felszereles
+        original.Felszereles = dto.Felszereles1E.FegyverIds.Select(x => new V1Felszereles
         {
             Karakter = original,
             IsFegyver = true,

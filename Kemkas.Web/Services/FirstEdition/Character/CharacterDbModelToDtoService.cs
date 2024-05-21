@@ -38,7 +38,7 @@ public class CharacterDbModelToDto1EService : ICharacterDbModelToDto1EService
             TulajdonsagNovelesek = entity.Szintlepesek.OrderBy(x => x.KarakterSzint).Select(x => x.TulajdonsagNoveles).Where(x => x is not null).Cast<Tulajdonsag>().Select(x => x.Convert()).ToList(),
             HarcosSpecializaciok = entity.Osztaly == Osztaly1E.Harcos ? entity.Szintlepesek.OrderBy(x => x.KarakterSzint).Select(x => x.FegyverSpecializacio).Where(x => x != null).Cast<string>().ToList() : [],
             KalozKritikus = entity.Osztaly == Osztaly1E.Kaloz ? entity.Szintlepesek.OrderBy(x => x.KarakterSzint).Select(x => x.FegyverSpecializacio).Where(x => x != null).Cast<string>().ToList() : [],
-            Felszereles = new KarakterFelszerelesDto
+            Felszereles1E = new KarakterFelszereles1eDto
             {
                 PajzsId = entity.Pajzs,
                 PancelId = entity.Pancel,

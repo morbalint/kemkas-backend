@@ -33,11 +33,14 @@ public class CharacterDbModelToDto2EService : ICharacterDbModelToDto2EService
             Kepzettsegek = entity.KarakterKepzettsegek.Where(x => !x.IsTolvajKepzettseg).Select(x => x.Kepzettseg.Convert()).ToList(),
             Tolvajkepzettsegek = entity.KarakterKepzettsegek.Where(x => x.IsTolvajKepzettseg).Select(x => x.Kepzettseg.Convert()).ToList(),
             Szint = entity.Szint,
-            Felszereles = new KarakterFelszerelesDto
+            Felszereles = new KarakterFelszereles2eDto
             {
                 PajzsId = entity.Pajzs,
                 PancelId = entity.Pancel,
-                FegyverIds = entity.Felszereles.Where(x => x.IsFegyver).Select(x => x.TargyId).ToList(),
+                Fegyverek = entity.Felszereles.Where(x => x.IsFegyver).Select(x => new FelszerelesIdAndCount { Id = x.TargyId, Count = x.Count}).ToList(),
+                Viselt = entity.Felszereles.Where(x => x.IsViselt).Select(x => new FelszerelesIdAndCount { Id = x.TargyId, Count = x.Count}).ToList(),
+                Cipelt = entity.Felszereles.Where(x => x.IsCipelt).Select(x => new FelszerelesIdAndCount { Id = x.TargyId, Count = x.Count}).ToList(),
+                Aprosagok = entity.Felszereles.Where(x => x.IsAprosag).Select(x => new FelszerelesIdAndCount { Id = x.TargyId, Count = x.Count}).ToList(),
             },
             IsPublic = entity.IsPublic,
             Szintlepesek = entity.Szintlepesek.OrderBy(x => x.KarakterSzint).Select(sz => new Szintlepes

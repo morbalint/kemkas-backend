@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Kemkas.Web.ViewModels;
 
-public struct Character2eDto
+public class Character2eDto
 {
     [Required]
     [JsonPropertyName("nev")]
@@ -40,7 +40,7 @@ public struct Character2eDto
     public IList<Szintlepes> Szintlepesek { get; set; }
     
     [JsonPropertyName("felszereles")]
-    public KarakterFelszerelesDto Felszereles { get; set; }
+    public KarakterFelszereles2eDto Felszereles { get; set; }
 
     public bool? IsPublic { get; set; }
 }

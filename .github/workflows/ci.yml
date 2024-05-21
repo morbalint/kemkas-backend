@@ -43,7 +43,7 @@ jobs:
           docker push registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}
       - uses: actions/checkout@v4
         with:
-          repository: morbalint/kemkas-deployment
+          repository: ${{ github.repository_owner }}/kemkas-deployment
           ref: refs/heads/main
           path: ./deployment-repo
           clean: false

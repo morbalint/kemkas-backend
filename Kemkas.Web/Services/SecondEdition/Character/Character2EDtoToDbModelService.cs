@@ -35,12 +35,36 @@ public class Character2EDtoToDbModelService : ICharacter2EDtoToDbModelService
         };
         
         karakter.KarakterKepzettsegek = ConvertKarakterKepzettsegek(dto, karakter);
-        karakter.Felszereles = dto.Felszereles.FegyverIds.Select(x => new V2Felszereles
+        var felszereles = dto.Felszereles.Fegyverek.Select(x => new V2Felszereles
         {
             Karakter = karakter,
             IsFegyver = true,
-            TargyId = x,
+            TargyId = x.Id,
+            Count = x.Count,
         }).ToList();
+        felszereles.AddRange(dto.Felszereles.Viselt.Select(x => new V2Felszereles
+        {
+            Karakter = karakter,
+            IsViselt = true,
+            TargyId = x.Id,
+            Count = x.Count,
+        }));
+        felszereles.AddRange(dto.Felszereles.Cipelt.Select(x => new V2Felszereles
+        {
+            Karakter = karakter,
+            IsCipelt = true,
+            TargyId = x.Id,
+            Count = x.Count,
+        }));
+        felszereles.AddRange(dto.Felszereles.Aprosagok.Select(x => new V2Felszereles
+        {
+            Karakter = karakter,
+            IsAprosag = true,
+            TargyId = x.Id,
+            Count = x.Count,
+        }));
+        karakter.Felszereles = felszereles;
+
         karakter.Szintlepesek = dto.Szintlepesek.Select((x, i) => new V2Szintlepes
         {
             Karakter = karakter,
@@ -73,12 +97,35 @@ public class Character2EDtoToDbModelService : ICharacter2EDtoToDbModelService
         original.Pajzs = dto.Felszereles.PajzsId;
         original.Pancel = dto.Felszereles.PancelId;
         original.KarakterKepzettsegek = ConvertKarakterKepzettsegek(dto, original);
-        original.Felszereles = dto.Felszereles.FegyverIds.Select(x => new V2Felszereles
+        var felszereles = dto.Felszereles.Fegyverek.Select(x => new V2Felszereles
         {
             Karakter = original,
             IsFegyver = true,
-            TargyId = x,
+            TargyId = x.Id,
+            Count = x.Count,
         }).ToList();
+        felszereles.AddRange(dto.Felszereles.Viselt.Select(x => new V2Felszereles
+        {
+            Karakter = original,
+            IsViselt = true,
+            TargyId = x.Id,
+            Count = x.Count,
+        }));
+        felszereles.AddRange(dto.Felszereles.Cipelt.Select(x => new V2Felszereles
+        {
+            Karakter = original,
+            IsCipelt = true,
+            TargyId = x.Id,
+            Count = x.Count,
+        }));
+        felszereles.AddRange(dto.Felszereles.Aprosagok.Select(x => new V2Felszereles
+        {
+            Karakter = original,
+            IsAprosag = true,
+            TargyId = x.Id,
+            Count = x.Count,
+        }));
+        original.Felszereles = felszereles;
         original.Szintlepesek = dto.Szintlepesek.Select((x, i) => new V2Szintlepes
         {
             Karakter = original,

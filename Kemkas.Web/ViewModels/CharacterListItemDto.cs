@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Kemkas.Web.ViewModels;
 
-public struct CharacterListItemDto()
+public class CharacterListItemDto()
 {
     [JsonPropertyName("id")]
     public required Guid Id { get; set; }

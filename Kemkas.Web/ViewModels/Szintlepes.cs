@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Kemkas.Web.ViewModels;
 
-public struct Szintlepes
+public class Szintlepes
 {
     [JsonPropertyName("osztaly")]
     public string Osztaly { get; set; }
