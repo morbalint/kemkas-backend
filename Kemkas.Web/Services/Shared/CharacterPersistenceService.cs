@@ -56,7 +56,8 @@ public class CharacterPersistenceService(
     {
         IQueryable<V1Karakter> queryable = dbContext.Karakterek.Include(x => x.KarakterKepzettsegek)
             .Include(x => x.Szintlepesek)
-            .Include(x => x.Felszereles);
+            .Include(x => x.Felszereles)
+            .AsSplitQuery();
 
         queryable = tracking ? queryable.AsTracking() : queryable.AsNoTracking(); 
         
@@ -76,7 +77,8 @@ public class CharacterPersistenceService(
     {
         IQueryable<V2Karakter> queryable = dbContext.Karakterek2E.Include(x => x.KarakterKepzettsegek)
             .Include(x => x.Szintlepesek)
-            .Include(x => x.Felszereles);
+            .Include(x => x.Felszereles)
+            .AsSplitQuery();
 
         queryable = tracking ? queryable.AsTracking() : queryable.AsNoTracking(); 
         
@@ -134,14 +136,14 @@ public class CharacterPersistenceService(
     public async Task UpdateCharacter1E(V1Karakter karakter, bool isPublic = false)
     {
         karakter.IsPublic = isPublic;
-        dbContext.Karakterek.Attach(karakter);
+        dbContext.Karakterek.Attach(karakter); // TODO: this can be incorrect!
         await dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateCharacter2E(V2Karakter karakter, bool isPublic = false)
     {
         karakter.IsPublic = isPublic;
-        dbContext.Karakterek2E.Attach(karakter);
+        dbContext.Karakterek2E.Attach(karakter); // TODO: this can be incorrect! 
         await dbContext.SaveChangesAsync();
     }
 }
