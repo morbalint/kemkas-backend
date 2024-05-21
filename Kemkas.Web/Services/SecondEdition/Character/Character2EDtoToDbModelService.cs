@@ -30,7 +30,7 @@ public class Character2EDtoToDbModelService : ICharacter2EDtoToDbModelService
             Bolcsesseg = dto.Tulajdonsagok.Bol,
             Karizma = dto.Tulajdonsagok.Kar,
             Szint = dto.Szint,
-            Pajzs = dto.Felszereles.PancelId,
+            Pajzs = dto.Felszereles.PajzsId,
             Pancel = dto.Felszereles.PancelId
         };
         
