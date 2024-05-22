@@ -41,6 +41,9 @@ public class CharacterDbModelToDto2EService : ICharacterDbModelToDto2EService
                 Viselt = entity.Felszereles.Where(x => x.IsViselt).Select(x => new FelszerelesIdAndCount { Id = x.TargyId, Count = x.Count}).ToList(),
                 Cipelt = entity.Felszereles.Where(x => x.IsCipelt).Select(x => new FelszerelesIdAndCount { Id = x.TargyId, Count = x.Count}).ToList(),
                 Aprosagok = entity.Felszereles.Where(x => x.IsAprosag).Select(x => new FelszerelesIdAndCount { Id = x.TargyId, Count = x.Count}).ToList(),
+                AranyTaller = entity.AranyTaller,
+                ElektrumTaller = entity.ElektrumTaller,
+                EzustTaller = entity.EzustTaller,
             },
             IsPublic = entity.IsPublic,
             Szintlepesek = entity.Szintlepesek.OrderBy(x => x.KarakterSzint).Select(sz => new Szintlepes

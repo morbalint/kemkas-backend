@@ -30,6 +30,12 @@ public class V2Karakter
     public string? Pancel { get; set; }
     public string? Pajzs { get; set; }
     
+    public int AranyTaller { get; set; }
+    
+    public int ElektrumTaller { get; set; }
+    
+    public int EzustTaller { get; set; }
+    
     [ForeignKey(nameof(OwnerUserId))]
     public ApplicationUser? OwnerUser { get; set; }
     

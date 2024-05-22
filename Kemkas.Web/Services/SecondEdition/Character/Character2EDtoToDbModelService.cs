@@ -31,7 +31,10 @@ public class Character2EDtoToDbModelService : ICharacter2EDtoToDbModelService
             Karizma = dto.Tulajdonsagok.Kar,
             Szint = dto.Szint,
             Pajzs = dto.Felszereles.PajzsId,
-            Pancel = dto.Felszereles.PancelId
+            Pancel = dto.Felszereles.PancelId,
+            AranyTaller = dto.Felszereles.AranyTaller,
+            ElektrumTaller = dto.Felszereles.ElektrumTaller,
+            EzustTaller = dto.Felszereles.EzustTaller,
         };
         
         karakter.KarakterKepzettsegek = ConvertKarakterKepzettsegek(dto, karakter);
@@ -96,6 +99,10 @@ public class Character2EDtoToDbModelService : ICharacter2EDtoToDbModelService
         original.Szint = dto.Szint;
         original.Pajzs = dto.Felszereles.PajzsId;
         original.Pancel = dto.Felszereles.PancelId;
+        original.AranyTaller = dto.Felszereles.AranyTaller;
+        original.ElektrumTaller = dto.Felszereles.ElektrumTaller;
+        original.EzustTaller = dto.Felszereles.EzustTaller;
+        
         original.KarakterKepzettsegek = ConvertKarakterKepzettsegek(dto, original);
         var felszereles = dto.Felszereles.Fegyverek.Select(x => new V2Felszereles
         {

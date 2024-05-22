@@ -21,4 +21,13 @@ public class KarakterFelszereles2eDto
     
     [JsonPropertyName("aprosagok")]
     public IList<FelszerelesIdAndCount> Aprosagok { get; set; }
+    
+    [JsonPropertyName("at")]
+    public int AranyTaller { get; set; }
+
+    [JsonPropertyName("el")]
+    public int ElektrumTaller { get; set; }
+
+    [JsonPropertyName("et")]
+    public int EzustTaller { get; set; }
 }
