@@ -42,7 +42,7 @@ builder.AddAuth();
 
 builder.Services.AddControllersWithViews().AddJsonOptions(options =>
 {
-    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     options.JsonSerializerOptions.AllowTrailingCommas = true;
     options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
 });
