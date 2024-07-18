@@ -47,4 +47,7 @@ public class V2Karakter
     
     [InverseProperty(nameof(V2Felszereles.Karakter))]
     public virtual IEnumerable<V2Felszereles> Felszereles { get; set; }
+    
+    [InverseProperty(nameof(V2KarakterVarazslat.Karakter))]
+    public virtual ISet<V2KarakterVarazslat> Varazslatok { get; set; }
 }

@@ -6,14 +6,14 @@ namespace Kemkas.Web.Services.SecondEdition.Character;
 
 public interface ICharacterDbModelToDto2EService
 {
-    public Character2eDto Convert(V2Karakter entity);
+    public Karakter2eDto Convert(V2Karakter entity);
 }
 
 public class CharacterDbModelToDto2EService : ICharacterDbModelToDto2EService
 {
-    public Character2eDto Convert(V2Karakter entity)
+    public Karakter2eDto Convert(V2Karakter entity)
     {
-        return new Character2eDto
+        return new Karakter2eDto
         {
             Nev = entity.Nev,
             Nem = entity.Nem,
@@ -54,7 +54,12 @@ public class CharacterDbModelToDto2EService : ICharacterDbModelToDto2EService
                 TulajdonsagNoveles = sz.TulajdonsagNoveles?.Convert(),
                 HProll = sz.HpRoll,
                 TolvajExtraKepzettseg = sz.TolvajExtraKepzettseg?.Convert()
-            }).ToList()
+            }).ToList(),
+            Varazslatok = entity.Varazslatok.Select(v => new KarakterVarazslat2eDto
+            {
+                Bekeszitve = v.Bekeszitve,
+                VarazslatId = v.VarazslatId,
+            }).ToList(),
         };
     }
 }

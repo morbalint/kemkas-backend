@@ -7,14 +7,14 @@ namespace Kemkas.Web.Services.FirstEdition.Character;
 
 public interface ICharacter1EDtoToDbModelService
 {
-    public V1Karakter Convert(Character1eDto dto);
+    public V1Karakter Convert(Karakter1eDto dto);
 
-    public void Update(V1Karakter original, Character1eDto dto);
+    public void Update(V1Karakter original, Karakter1eDto dto);
 }
 
 public class Character1EDtoToDbModelService : ICharacter1EDtoToDbModelService
 {
-    public V1Karakter Convert(Character1eDto dto)
+    public V1Karakter Convert(Karakter1eDto dto)
     {
         var karakter = new V1Karakter
         {
@@ -47,7 +47,7 @@ public class Character1EDtoToDbModelService : ICharacter1EDtoToDbModelService
         return karakter;
     }
 
-    public void Update(V1Karakter original, Character1eDto dto)
+    public void Update(V1Karakter original, Karakter1eDto dto)
     {
         original.Nev = dto.Name;
         original.Nem = dto.Nem;
@@ -76,7 +76,7 @@ public class Character1EDtoToDbModelService : ICharacter1EDtoToDbModelService
     }
 
     // TODO: this is unnecessary duplication of business logic!!
-    private static List<V1Szintlepes> ConvertSzintLepes(Character1eDto dto, V1Karakter karakter)
+    private static List<V1Szintlepes> ConvertSzintLepes(Karakter1eDto dto, V1Karakter karakter)
     {
         if (dto.HpRolls.Count < dto.Szint - 2)
         {
@@ -131,7 +131,7 @@ public class Character1EDtoToDbModelService : ICharacter1EDtoToDbModelService
         }).Prepend(level1).ToList();
     }
 
-    private static List<V1KarakterKepzettseg> ConvertKepzettsegek(Character1eDto dto, V1Karakter karakter)
+    private static List<V1KarakterKepzettseg> ConvertKepzettsegek(Karakter1eDto dto, V1Karakter karakter)
     {
         var kepzettsegek = dto.Kepzettsegek.Select(x => new V1KarakterKepzettseg
         {

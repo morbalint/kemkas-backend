@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Kemkas.Web.ViewModels;
 
-public class Character2eDto
+public class Karakter2eDto
 {
     [Required]
     [JsonPropertyName("nev")]
@@ -41,6 +41,9 @@ public class Character2eDto
     
     [JsonPropertyName("felszereles")]
     public KarakterFelszereles2eDto Felszereles { get; set; }
+    
+    [JsonPropertyName("varazslatok")]
+    public IList<KarakterVarazslat2eDto>? Varazslatok { get; set; }
 
     public bool? IsPublic { get; set; }
 }

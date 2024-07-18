@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Kemkas.Web.ViewModels;
 
-public class Character1eDto
+public class Karakter1eDto
 {
     [Required]
     [JsonPropertyName("name")]

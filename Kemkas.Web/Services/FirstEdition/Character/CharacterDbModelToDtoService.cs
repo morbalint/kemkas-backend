@@ -6,14 +6,14 @@ namespace Kemkas.Web.Services.FirstEdition.Character;
 
 public interface ICharacterDbModelToDto1EService
 {
-    public Character1eDto Convert(V1Karakter entity);
+    public Karakter1eDto Convert(V1Karakter entity);
 }
 
 public class CharacterDbModelToDto1EService : ICharacterDbModelToDto1EService
 {
-    public Character1eDto Convert(V1Karakter entity)
+    public Karakter1eDto Convert(V1Karakter entity)
     {
-        return new Character1eDto
+        return new Karakter1eDto
         {
             Name = entity.Nev,
             Nem = entity.Nem,

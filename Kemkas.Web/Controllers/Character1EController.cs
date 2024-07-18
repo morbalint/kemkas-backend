@@ -24,7 +24,7 @@ public class Character1EController(
     : ControllerBase
 {
     [HttpPost]
-    public async Task<ActionResult<Guid>> StoreNewCharacter([FromBody] Character1eDto dto, [FromQuery]bool isPublic = true)
+    public async Task<ActionResult<Guid>> StoreNewCharacter([FromBody] Karakter1eDto dto, [FromQuery]bool isPublic = true)
     {
         if (!ModelState.IsValid)
         {
@@ -50,7 +50,7 @@ public class Character1EController(
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<ActionResult<Character1eDto>> GetCharacterById([FromRoute] Guid id)
+    public async Task<ActionResult<Karakter1eDto>> GetCharacterById([FromRoute] Guid id)
     {
         var entity = await persistenceService.GetCharacter1EById(id);
         if (entity is null)
@@ -62,7 +62,7 @@ public class Character1EController(
     }
     
     [HttpPost("{id:guid}")]
-    public async Task<ActionResult<Guid>> UpdateCharacter([FromRoute] Guid id, [FromBody] Character1eDto dto, [FromQuery]bool isPublic = true)
+    public async Task<ActionResult<Guid>> UpdateCharacter([FromRoute] Guid id, [FromBody] Karakter1eDto dto, [FromQuery]bool isPublic = true)
     {
         if (!ModelState.IsValid)
         {

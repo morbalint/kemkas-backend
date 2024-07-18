@@ -6,14 +6,14 @@ namespace Kemkas.Web.Services.SecondEdition.Character;
 
 public interface ICharacter2EDtoToDbModelService
 {
-    public V2Karakter Convert(Character2eDto dto);
+    public V2Karakter Convert(Karakter2eDto dto);
 
-    public void Update(V2Karakter original, Character2eDto dto);
+    public void Update(V2Karakter original, Karakter2eDto dto);
 }
 
 public class Character2EDtoToDbModelService : ICharacter2EDtoToDbModelService
 {
-    public V2Karakter Convert(Character2eDto dto)
+    public V2Karakter Convert(Karakter2eDto dto)
     {
         var karakter = new V2Karakter
         {
@@ -78,11 +78,18 @@ public class Character2EDtoToDbModelService : ICharacter2EDtoToDbModelService
             TulajdonsagNoveles = x.TulajdonsagNoveles == null ? null : TulajdonsagExtensions.Convert(x.TulajdonsagNoveles),
             TolvajExtraKepzettseg = x.TolvajExtraKepzettseg == null ? null : KepzettsegExtensions.Convert2E(x.TolvajExtraKepzettseg),
         }).ToList();
-
+        
+        karakter.Varazslatok = dto.Varazslatok?.Select(v => new V2KarakterVarazslat
+        {
+            Karakter = karakter,
+            Bekeszitve = v.Bekeszitve,
+            VarazslatId = v.VarazslatId,
+        }).ToHashSet() ?? [];
+        
         return karakter;
     }
 
-    public void Update(V2Karakter original, Character2eDto dto)
+    public void Update(V2Karakter original, Karakter2eDto dto)
     {
         original.Nev = dto.Nev;
         original.Nem = dto.Nem;
@@ -143,9 +150,38 @@ public class Character2EDtoToDbModelService : ICharacter2EDtoToDbModelService
             TulajdonsagNoveles = x.TulajdonsagNoveles == null ? null : TulajdonsagExtensions.Convert(x.TulajdonsagNoveles),
             TolvajExtraKepzettseg = x.TolvajExtraKepzettseg == null ? null : KepzettsegExtensions.Convert2E(x.TolvajExtraKepzettseg),
         }).ToList();
+
+        if (dto.Varazslatok == null)
+        {
+            original.Varazslatok = new HashSet<V2KarakterVarazslat>();
+        }
+        else
+        {
+            var dtoVarazslatok = dto.Varazslatok.ToList();
+            var toAdd = dtoVarazslatok.Where(v => original.Varazslatok.Any(x => x.VarazslatId == v.VarazslatId))
+                .Select(v => new V2KarakterVarazslat
+                {
+                    VarazslatId = v.VarazslatId,
+                    Bekeszitve = v.Bekeszitve,
+                }).ToList();
+            var toUpdate = original.Varazslatok
+                .Select(x =>
+                {
+                    var dtoVarazslat = dtoVarazslatok.FirstOrDefault(v => v.VarazslatId == x.VarazslatId);
+                    return (dbVarazslat: x, dtoVarazslat);
+                })
+                .Where(x => x.dtoVarazslat != null)
+                .Select(x =>
+                {
+                    x.dbVarazslat.Bekeszitve = x.dtoVarazslat!.Bekeszitve;
+                    return x.dbVarazslat;
+                })
+                .ToList();
+            original.Varazslatok = toAdd.Concat(toUpdate).ToHashSet();
+        }
     }
 
-    private static List<V2KarakterKepzettseg> ConvertKarakterKepzettsegek(Character2eDto dto, V2Karakter karakter)
+    private static List<V2KarakterKepzettseg> ConvertKarakterKepzettsegek(Karakter2eDto dto, V2Karakter karakter)
     {
         var kepzettsegek = dto.Kepzettsegek.Select(x => new V2KarakterKepzettseg
         {
