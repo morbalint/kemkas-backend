@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "General", "General", "{5D06
 		.dockerignore = .dockerignore
 		.github\dependabot.yml = .github\dependabot.yml
 		.github\workflows\ci.yml = .github\workflows\ci.yml
+		Kemkas.Web\docker-compose.yaml = Kemkas.Web\docker-compose.yaml
+		Kemkas.Web\nginx.conf = Kemkas.Web\nginx.conf
 	EndProjectSection
 EndProject
 Global
