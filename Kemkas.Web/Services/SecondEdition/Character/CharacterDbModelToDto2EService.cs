@@ -59,6 +59,7 @@ public class CharacterDbModelToDto2EService : ICharacterDbModelToDto2EService
             {
                 Bekeszitve = v.Bekeszitve,
                 VarazslatId = v.VarazslatId,
+                Osztaly = v.Osztaly.Convert()
             }).ToList(),
         };
     }

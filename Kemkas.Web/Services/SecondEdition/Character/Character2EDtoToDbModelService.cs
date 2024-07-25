@@ -84,6 +84,7 @@ public class Character2EDtoToDbModelService : ICharacter2EDtoToDbModelService
             Karakter = karakter,
             Bekeszitve = v.Bekeszitve,
             VarazslatId = v.VarazslatId,
+            Osztaly = OsztalyExtensions.Convert2E(v.Osztaly),
         }).ToHashSet() ?? [];
         
         return karakter;
@@ -163,11 +164,13 @@ public class Character2EDtoToDbModelService : ICharacter2EDtoToDbModelService
                 {
                     VarazslatId = v.VarazslatId,
                     Bekeszitve = v.Bekeszitve,
+                    Osztaly = OsztalyExtensions.Convert2E(v.Osztaly),
                 }).ToList();
             var toUpdate = original.Varazslatok
                 .Select(x =>
                 {
-                    var dtoVarazslat = dtoVarazslatok.FirstOrDefault(v => v.VarazslatId == x.VarazslatId);
+                    var dtoVarazslat = dtoVarazslatok.FirstOrDefault(v => 
+                        v.VarazslatId == x.VarazslatId && v.Osztaly == x.Osztaly.Convert());
                     return (dbVarazslat: x, dtoVarazslat);
                 })
                 .Where(x => x.dtoVarazslat != null)

@@ -16,12 +16,12 @@ See deployment repo at: [https://github.com/morbalint/kemkas-deployment](https:/
 
 For frontend see: [Frontend README](https://github.com/morbalint/kemkas/README.md)
 
-To start development, spin up the docker-compose.yaml file and use the launchSettings.json to start the backend and frontend dev servers.
+To start development, spin up the docker-compose.yaml file and use the launchSettings.json to start the backend dev server. Use the frontend repo to start the frontend dev server.
 
 For the first time setup:
 ```shell
-dotnet dev-certs https --format PEM --no-password -ep ~/.aspnet/https/kemkas.pem`
-docker compose up -d
+dotnet dev-certs https --clean && \
+dotnet dev-certs https --format PEM --no-password -ep ~/.aspnet/https/kemkas.pem
 ```
 
 Later start the docker compose first and the project launch settings after the DB is up and running. 

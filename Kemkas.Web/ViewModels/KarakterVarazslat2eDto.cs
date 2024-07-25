@@ -9,4 +9,7 @@ public class KarakterVarazslat2eDto
     
     [JsonPropertyName("bekeszitve")]
     public bool Bekeszitve { get; set; }
+    
+    [JsonPropertyName("osztaly")]
+    public string Osztaly { get; set; }
 }
