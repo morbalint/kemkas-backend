@@ -75,9 +75,11 @@ public class CharacterPersistenceService(
 
     public async Task<V2Karakter?> GetCharacter2EById(Guid id, bool tracking = false)
     {
-        IQueryable<V2Karakter> queryable = dbContext.Karakterek2E.Include(x => x.KarakterKepzettsegek)
+        IQueryable<V2Karakter> queryable = dbContext.Karakterek2E
+            .Include(x => x.KarakterKepzettsegek)
             .Include(x => x.Szintlepesek)
             .Include(x => x.Felszereles)
+            .Include(x => x.Varazslatok)
             .AsSplitQuery();
 
         queryable = tracking ? queryable.AsTracking() : queryable.AsNoTracking(); 
