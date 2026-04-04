@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/General/">
+    <File Path=".dockerignore" />
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/workflows/ci.yml" />
+    <File Path=".gitignore" />
+    <File Path="Kemkas.Web/docker-compose.yaml" />
+    <File Path="Kemkas.Web/nginx.conf" />
+    <File Path="README.md" />
+    <File Path="TODO.md" />
+  </Folder>
+  <Project Path="Kemkas.Web/Kemkas.Web.csproj" />
+</Solution>
