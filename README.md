@@ -25,3 +25,12 @@ dotnet dev-certs https --format PEM --no-password -ep ~/.aspnet/https/kemkas.pem
 ```
 
 Later start the docker compose first and the project launch settings after the DB is up and running. 
+
+## Unit tests
+
+Run backend unit tests from the repository root:
+
+```shell
+dotnet test Kemkas.slnx -c Release
+```
+

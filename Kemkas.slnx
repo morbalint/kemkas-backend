@@ -9,5 +9,6 @@
     <File Path="README.md" />
     <File Path="TODO.md" />
   </Folder>
+  <Project Path="Kemkas.Web.Tests/Kemkas.Web.Tests.csproj" />
   <Project Path="Kemkas.Web/Kemkas.Web.csproj" />
 </Solution>
