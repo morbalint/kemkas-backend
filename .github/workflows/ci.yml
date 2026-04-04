@@ -27,33 +27,24 @@ jobs:
           file: Kemkas.Web/Dockerfile
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          push: false
+          push: true
           load: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/kemkas-backend:${{ env.GITHUB_SHA_SHORT }}
-            registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DO_ACCESS_TOKEN }}
-      - name: Log in to DigitalOcean Container Registry with short-lived credentials
-        run: doctl registry login --expiry-seconds 1200
-      - run: |
-          docker push ghcr.io/${{ github.repository_owner }}/kemkas-backend:${{ env.GITHUB_SHA_SHORT }}
-          docker push registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}
-      - uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/kemkas-deployment
-          ref: refs/heads/main
-          path: ./deployment-repo
-          clean: false
-          ssh-key: ${{ secrets.DEPLOYMENT_REPO_DEPLOY_KEY }}
-      - uses: mikefarah/yq@v4
-        with:
-          cmd: yq -i '.spec.template.spec.containers[0].image = "registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}"' ./deployment-repo/kemkas-beta/kemkas-be-deployment.yaml
-      - run: |
-          cd ./deployment-repo
-          git config --add user.email "deployment-bot@kemkas.hu"
-          git config --add user.name "Deployment Bot"
-          git commit -a -m "deploy registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}" 
-          git push
+
+#      - uses: actions/checkout@v4
+#        with:
+#          repository: ${{ github.repository_owner }}/kemkas-deployment
+#          ref: refs/heads/main
+#          path: ./deployment-repo
+#          clean: false
+#          ssh-key: ${{ secrets.DEPLOYMENT_REPO_DEPLOY_KEY }}
+#      - uses: mikefarah/yq@v4
+#        with:
+#          cmd: yq -i '.spec.template.spec.containers[0].image = "registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}"' ./deployment-repo/kemkas-beta/kemkas-be-deployment.yaml
+#      - run: |
+#          cd ./deployment-repo
+#          git config --add user.email "deployment-bot@kemkas.hu"
+#          git config --add user.name "Deployment Bot"
+#          git commit -a -m "deploy registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}" 
+#          git push
