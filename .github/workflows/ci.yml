@@ -41,13 +41,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - run: |
-          echo "GITHUB_SHA_SHORT=$(echo ${GITHUB_SHA::8})" >> $GITHUB_ENV
-          echo "ghcr.io/${{ github.repository_owner }}/kemkas-backend:${GITHUB_SHA::8}"
       - name: Compute image tag
         id: image-tag
         run: |
-          image_repo="ghcr.io/${{ github.repository_owner }}/kemkas-frontend"
+          image_repo="ghcr.io/${{ github.repository_owner }}/kemkas-backend"
           sha_tag="${image_repo}:${GITHUB_SHA::8}"
           
           tags="$sha_tag"
