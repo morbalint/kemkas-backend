@@ -91,9 +91,9 @@ jobs:
       - name: Setup docker compose
         uses: docker/setup-compose-action@v2
       - name: Pull images for test run
-        run: docker compose -f docker-compose.e2e.yaml pull
+        run: docker compose -f e2e.docker-compose.yaml pull
       - name: Run Docker Compose E2E tests
-        run: docker compose -f docker-compose.e2e.yaml up --no-build --abort-on-container-exit --exit-code-from e2e e2e
+        run: docker compose -f e2e.docker-compose.yaml up --no-build --abort-on-container-exit --exit-code-from e2e e2e
       - name: Upload Playwright HTML report
         if: always()
         uses: actions/upload-artifact@v7
@@ -110,4 +110,4 @@ jobs:
           if-no-files-found: ignore
       - name: Tear down Docker Compose stack
         if: always()
-        run: docker compose -f docker-compose.e2e.yaml down -v --remove-orphans
+        run: docker compose -f e2e.docker-compose.yaml down -v --remove-orphans
