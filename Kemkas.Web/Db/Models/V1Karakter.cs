@@ -35,11 +35,11 @@ public class V1Karakter
     public ApplicationUser? OwnerUser { get; set; }
     
     [InverseProperty(nameof(V1KarakterKepzettseg.Karakter))]
-    public virtual IEnumerable<V1KarakterKepzettseg> KarakterKepzettsegek { get; set; } = [];
+    public virtual ICollection<V1KarakterKepzettseg> KarakterKepzettsegek { get; set; } = new List<V1KarakterKepzettseg>();
     
     [InverseProperty(nameof(V1Szintlepes.Karakter))]
-    public virtual IEnumerable<V1Szintlepes> Szintlepesek { get; set; } = [];
+    public virtual ICollection<V1Szintlepes> Szintlepesek { get; set; } = new List<V1Szintlepes>();
     
     [InverseProperty(nameof(V1Felszereles.Karakter))]
-    public virtual IEnumerable<V1Felszereles> Felszereles { get; set; } = [];
+    public virtual ICollection<V1Felszereles> Felszereles { get; set; } = new List<V1Felszereles>();
 }
