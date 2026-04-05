@@ -94,6 +94,9 @@ jobs:
         run: docker compose -f e2e.docker-compose.yaml pull
       - name: Run Docker Compose E2E tests
         run: docker compose -f e2e.docker-compose.yaml up --no-build --abort-on-container-exit --exit-code-from e2e e2e
+      - name: Print logs
+        if: failure()
+        run: docker compose -f e2e.docker-compose.yaml logs
       - name: Upload Playwright HTML report
         if: always()
         uses: actions/upload-artifact@v7

@@ -34,7 +34,7 @@ services:
         condition: service_healthy
 
   frontend:
-    image: ${FRONTEND_IMAGE:-ghcr.io/morbalint/kemkas-frontend:local}
+    image: ${FRONTEND_IMAGE:-ghcr.io/morbalint/kemkas-frontend:latest}
 
   proxy:
     image: nginx:1.29.7-alpine3.23
@@ -58,7 +58,7 @@ services:
       start_period: 5s
 
   e2e:
-    image: ${E2E_IMAGE:-ghcr.io/morbalint/kemkas-e2e:local}
+    image: ${E2E_IMAGE:-ghcr.io/morbalint/kemkas-e2e:latest}
     environment:
       E2E_BASE_URL: https://proxy:8000
       E2E_USE_WEBSERVER: "false"
