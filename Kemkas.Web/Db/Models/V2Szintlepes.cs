@@ -25,5 +25,5 @@ public class V2Szintlepes
     public Kepzettseg2E? TolvajExtraKepzettseg { get; set; }
     
     [ForeignKey(nameof(KarakterId))]
-    public virtual V2Karakter Karakter { get; set; }
+    public virtual V2Karakter Karakter { get; set; } = null!;
 }

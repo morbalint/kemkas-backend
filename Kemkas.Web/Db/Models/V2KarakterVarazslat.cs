@@ -18,5 +18,5 @@ public class V2KarakterVarazslat
     public Osztaly2E Osztaly { get; set; }
     
     [ForeignKey(nameof(KarakterId))]
-    public V2Karakter Karakter { get; set; }
+    public V2Karakter Karakter { get; set; } = null!;
 }

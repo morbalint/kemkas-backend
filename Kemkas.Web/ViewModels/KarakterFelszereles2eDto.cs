@@ -11,16 +11,16 @@ public class KarakterFelszereles2eDto
     public string? PajzsId { get; set; }
     
     [JsonPropertyName("fegyverek")]
-    public IList<FelszerelesIdAndCount> Fegyverek { get; set; }
+    public IList<FelszerelesIdAndCount> Fegyverek { get; set; } = [];
     
     [JsonPropertyName("viselt")]
-    public IList<FelszerelesIdAndCount> Viselt { get; set; }
+    public IList<FelszerelesIdAndCount> Viselt { get; set; } = [];
     
     [JsonPropertyName("cipelt")]
-    public IList<FelszerelesIdAndCount> Cipelt { get; set; }
+    public IList<FelszerelesIdAndCount> Cipelt { get; set; } = [];
     
     [JsonPropertyName("aprosagok")]
-    public IList<FelszerelesIdAndCount> Aprosagok { get; set; }
+    public IList<FelszerelesIdAndCount> Aprosagok { get; set; } = [];
     
     [JsonPropertyName("at")]
     public int AranyTaller { get; set; }

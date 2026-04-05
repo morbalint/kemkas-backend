@@ -5,7 +5,7 @@ namespace Kemkas.Web.ViewModels;
 public class Szintlepes
 {
     [JsonPropertyName("osztaly")]
-    public string Osztaly { get; set; }
+    public required string Osztaly { get; set; }
 
     [JsonPropertyName("HProll")]
     public byte HProll { get; set; }

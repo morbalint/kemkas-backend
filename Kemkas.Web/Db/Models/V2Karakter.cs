@@ -40,14 +40,14 @@ public class V2Karakter
     public ApplicationUser? OwnerUser { get; set; }
     
     [InverseProperty(nameof(V2KarakterKepzettseg.Karakter))]
-    public virtual IEnumerable<V2KarakterKepzettseg> KarakterKepzettsegek { get; set; }
+    public virtual IEnumerable<V2KarakterKepzettseg> KarakterKepzettsegek { get; set; } = [];
     
     [InverseProperty(nameof(V2Szintlepes.Karakter))]
-    public virtual IEnumerable<V2Szintlepes> Szintlepesek { get; set; }
+    public virtual IEnumerable<V2Szintlepes> Szintlepesek { get; set; } = [];
     
     [InverseProperty(nameof(V2Felszereles.Karakter))]
-    public virtual IEnumerable<V2Felszereles> Felszereles { get; set; }
+    public virtual IEnumerable<V2Felszereles> Felszereles { get; set; } = [];
     
     [InverseProperty(nameof(V2KarakterVarazslat.Karakter))]
-    public virtual ISet<V2KarakterVarazslat> Varazslatok { get; set; }
+    public virtual ISet<V2KarakterVarazslat> Varazslatok { get; set; } = new HashSet<V2KarakterVarazslat>();
 }
