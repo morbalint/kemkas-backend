@@ -1,9 +1,7 @@
-using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using Kemkas.Web.Config;
-using Microsoft.EntityFrameworkCore;
 using Kemkas.Web.Db;
 using Kemkas.Web.Db.Models;
 using Kemkas.Web.Services.FirstEdition.Character;
@@ -12,10 +10,10 @@ using Kemkas.Web.Services.SecondEdition.Character;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 // using OpenTelemetry.Metrics;
 // using OpenTelemetry.Resources;
 // using OpenTelemetry.Trace;
-using IPNetwork = Microsoft.AspNetCore.HttpOverrides.IPNetwork;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -65,7 +63,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     ForwardedHostHeaderName = "X-Forwarded-Host",
     ForwardedProtoHeaderName = "X-Forwarded-Proto",
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto,
-    KnownNetworks = { new IPNetwork(new IPAddress([0,0,0,0]), 0) }
+    KnownIPNetworks = { System.Net.IPNetwork.Parse("0.0.0.0/0") }
 });
 
 if (app.Environment.IsDevelopment())

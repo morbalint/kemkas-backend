@@ -13,5 +13,5 @@ public class V2KarakterKepzettseg
     public bool IsTolvajKepzettseg { get; set; } = false;
     
     [ForeignKey(nameof(KarakterId))]
-    public virtual V2Karakter Karakter { get; set; }
+    public virtual V2Karakter Karakter { get; set; } = null!;
 }

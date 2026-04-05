@@ -24,5 +24,5 @@ public class V2Felszereles
     public bool IsAprosag { get; set; } = false;
 
     [ForeignKey(nameof(KarakterId))]
-    public virtual V2Karakter Karakter { get; set; }
+    public virtual V2Karakter Karakter { get; set; } = null!;
 }

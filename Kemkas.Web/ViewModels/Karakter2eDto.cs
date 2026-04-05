@@ -7,7 +7,7 @@ public class Karakter2eDto
 {
     [Required]
     [JsonPropertyName("nev")]
-    public string Nev { get; set; }
+    public required string Nev { get; set; }
     
     [JsonPropertyName("nem")]
     public string? Nem { get; set; }
@@ -16,19 +16,19 @@ public class Karakter2eDto
     public double? Kor { get; set; }
     
     [JsonPropertyName("jellem")]
-    public string Jellem { get; set; }
+    public required string Jellem { get; set; }
     
     [JsonPropertyName("isten")]
     public string? Isten { get; set; }
     
     [JsonPropertyName("faj")]
-    public string Faj { get; set; }
+    public required string Faj { get; set; }
     
     [JsonPropertyName("tulajdonsagok")]
-    public KarakterTulajdonsagokDto Tulajdonsagok { get; set; }
+    public required KarakterTulajdonsagokDto Tulajdonsagok { get; set; }
     
     [JsonPropertyName("kepzettsegek")]
-    public IList<string> Kepzettsegek { get; set; }
+    public IList<string> Kepzettsegek { get; set; } = [];
     
     [JsonPropertyName("tolvajkepzettsegek")]
     public IList<string>? Tolvajkepzettsegek { get; set; } 
@@ -37,10 +37,10 @@ public class Karakter2eDto
     public byte Szint { get; set; }
  
     [JsonPropertyName("szintlepesek")]
-    public IList<Szintlepes> Szintlepesek { get; set; }
+    public IList<Szintlepes> Szintlepesek { get; set; } = [];
     
     [JsonPropertyName("felszereles")]
-    public KarakterFelszereles2eDto Felszereles { get; set; }
+    public required KarakterFelszereles2eDto Felszereles { get; set; }
     
     [JsonPropertyName("varazslatok")]
     public IList<KarakterVarazslat2eDto>? Varazslatok { get; set; }

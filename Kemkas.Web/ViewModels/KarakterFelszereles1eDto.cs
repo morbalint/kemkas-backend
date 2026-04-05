@@ -11,5 +11,5 @@ public class KarakterFelszereles1eDto
     public string? PajzsId { get; set; }
     
     [JsonPropertyName("fegyverIDk")]
-    public IList<string> FegyverIds { get; set; }
+    public IList<string> FegyverIds { get; set; } = new List<string>();
 }

@@ -7,7 +7,7 @@ public class Karakter1eDto
 {
     [Required]
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public required string Name { get; set; }
     
     [JsonPropertyName("nem")]
     public string? Nem { get; set; }
@@ -16,22 +16,22 @@ public class Karakter1eDto
     public double? Kor { get; set; }
     
     [JsonPropertyName("jellem")]
-    public string Jellem { get; set; }
+    public required string Jellem { get; set; }
     
     [JsonPropertyName("isten")]
     public string? Isten { get; set; }
     
     [JsonPropertyName("faj")]
-    public string Faj { get; set; }
+    public required string Faj { get; set; }
     
     [JsonPropertyName("osztaly")]
-    public string Osztaly { get; set; }
+    public required string Osztaly { get; set; }
     
     [JsonPropertyName("tulajdonsagok")]
-    public KarakterTulajdonsagokDto Tulajdonsagok { get; set; }
+    public required KarakterTulajdonsagokDto Tulajdonsagok { get; set; }
     
     [JsonPropertyName("kepzettsegek")]
-    public IList<string> Kepzettsegek { get; set; }
+    public IList<string> Kepzettsegek { get; set; } = [];
     
     [JsonPropertyName("tolvajkepzettsegek")]
     public IList<string>? Tolvajkepzettsegek { get; set; } 
@@ -40,19 +40,19 @@ public class Karakter1eDto
     public byte Szint { get; set; }
     
     [JsonPropertyName("hpRolls")]
-    public IList<byte> HpRolls { get; set; }
+    public IList<byte> HpRolls { get; set; } = new List<byte>();
     
     [JsonPropertyName("tulajdonsagNovelesek")]
-    public IList<string> TulajdonsagNovelesek { get; set; }
+    public IList<string> TulajdonsagNovelesek { get; set; } = new List<string>();
     
     [JsonPropertyName("harcosSpecializaciok")]
-    public IList<string> HarcosSpecializaciok { get; set; }
+    public IList<string> HarcosSpecializaciok { get; set; } = new List<string>();
     
     [JsonPropertyName("kalozKritikus")]
-    public IList<string> KalozKritikus { get; set; }
+    public IList<string> KalozKritikus { get; set; } = new List<string>();
     
     [JsonPropertyName("felszereles")]
-    public KarakterFelszereles1eDto Felszereles1E { get; set; }
+    public required KarakterFelszereles1eDto Felszereles1E { get; set; }
 
     public bool? IsPublic { get; set; }
 }

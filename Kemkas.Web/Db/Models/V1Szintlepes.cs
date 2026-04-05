@@ -24,5 +24,5 @@ public class V1Szintlepes
     public string? FegyverSpecializacio { get; set; }
     
     [ForeignKey(nameof(KarakterId))]
-    public virtual V1Karakter Karakter { get; set; }
+    public virtual V1Karakter Karakter { get; set; } = null!;
 }

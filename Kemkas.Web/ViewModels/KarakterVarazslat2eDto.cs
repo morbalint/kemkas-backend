@@ -5,11 +5,11 @@ namespace Kemkas.Web.ViewModels;
 public class KarakterVarazslat2eDto
 {
     [JsonPropertyName("id")]
-    public string VarazslatId { get; set; }
+    public required string VarazslatId { get; set; }
     
     [JsonPropertyName("bekeszitve")]
     public bool Bekeszitve { get; set; }
     
     [JsonPropertyName("osztaly")]
-    public string Osztaly { get; set; }
+    public required string Osztaly { get; set; }
 }
