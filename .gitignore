@@ -28,6 +28,7 @@ yarn-error.log*
 /tmp
 /temp
 /local
+/e2e/
 
 obj/
 bin/

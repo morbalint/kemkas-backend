@@ -3,6 +3,7 @@
     <File Path=".dockerignore" />
     <File Path=".github/dependabot.yml" />
     <File Path=".github/workflows/ci.yml" />
+    <File Path=".github/workflows/e2e.nginx.conf" />
     <File Path=".gitignore" />
     <File Path="Kemkas.Web/docker-compose.yaml" />
     <File Path="Kemkas.Web/nginx.conf" />
