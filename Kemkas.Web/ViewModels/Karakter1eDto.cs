@@ -40,16 +40,16 @@ public class Karakter1eDto
     public byte Szint { get; set; }
     
     [JsonPropertyName("hpRolls")]
-    public IList<byte> HpRolls { get; set; } = new List<byte>();
+    public IList<byte> HpRolls { get; set; } = [];
     
     [JsonPropertyName("tulajdonsagNovelesek")]
-    public IList<string> TulajdonsagNovelesek { get; set; } = new List<string>();
+    public IList<string> TulajdonsagNovelesek { get; set; } = [];
     
     [JsonPropertyName("harcosSpecializaciok")]
-    public IList<string> HarcosSpecializaciok { get; set; } = new List<string>();
+    public IList<string> HarcosSpecializaciok { get; set; } = [];
     
     [JsonPropertyName("kalozKritikus")]
-    public IList<string> KalozKritikus { get; set; } = new List<string>();
+    public IList<string> KalozKritikus { get; set; } = [];
     
     [JsonPropertyName("felszereles")]
     public required KarakterFelszereles1eDto Felszereles1E { get; set; }
