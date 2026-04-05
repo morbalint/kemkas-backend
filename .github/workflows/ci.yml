@@ -5,28 +5,63 @@ on:
     branches: [ "dev" ]
   pull_request:
     branches: [ "dev" ]
+  workflow_dispatch: 
+    inputs: 
+      frontend_image:
+        description: 'Frontend image to use in E2E tests (optional)'
+        required: false
+        default: 'ghcr.io/morbalint/kemkas-frontend:latest'
+      e2e_image:
+        description: 'E2E image to use in E2E tests (optional)'
+        required: false
+        default: 'ghcr.io/morbalint/kemkas-frontend:latest'
 
 jobs:
 
-  docker-be-build:
+  test-and-build:
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       packages: write
+      attestations: write
+      id-token: write
+    outputs:
+      image_sha_tag: ${{ steps.image-tag.outputs.image_sha_tag }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
       - name: Run unit tests
         run: dotnet test Kemkas.slnx -c Release
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
       - name: Log in to GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - run: |
           echo "GITHUB_SHA_SHORT=$(echo ${GITHUB_SHA::8})" >> $GITHUB_ENV
-          echo "registry.digitalocean.com/kemkas/kemkas-be:${GITHUB_SHA::8}"
           echo "ghcr.io/${{ github.repository_owner }}/kemkas-backend:${GITHUB_SHA::8}"
-      - uses: docker/build-push-action@v5
+      - name: Compute image tag
+        id: image-tag
+        run: |
+          image_repo="ghcr.io/${{ github.repository_owner }}/kemkas-frontend"
+          sha_tag="${image_repo}:${GITHUB_SHA::8}"
+          
+          tags="$sha_tag"
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            tags+=$'\n'"${image_repo}:latest"
+          fi
+            
+          echo "image_sha_tag=${sha_tag}" >> "$GITHUB_OUTPUT"
+          {
+            echo "tags<<EOF"
+            echo "$tags"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+      - uses: docker/build-push-action@v7
         with:
           context: .
           file: Kemkas.Web/Dockerfile
@@ -35,21 +70,47 @@ jobs:
           push: true
           load: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/kemkas-backend:${{ env.GITHUB_SHA_SHORT }}
+            ${{ steps.image-tag.outputs.tags }}
 
-#      - uses: actions/checkout@v4
-#        with:
-#          repository: ${{ github.repository_owner }}/kemkas-deployment
-#          ref: refs/heads/main
-#          path: ./deployment-repo
-#          clean: false
-#          ssh-key: ${{ secrets.DEPLOYMENT_REPO_DEPLOY_KEY }}
-#      - uses: mikefarah/yq@v4
-#        with:
-#          cmd: yq -i '.spec.template.spec.containers[0].image = "registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}"' ./deployment-repo/kemkas-beta/kemkas-be-deployment.yaml
-#      - run: |
-#          cd ./deployment-repo
-#          git config --add user.email "deployment-bot@kemkas.hu"
-#          git config --add user.name "Deployment Bot"
-#          git commit -a -m "deploy registry.digitalocean.com/kemkas/kemkas-be:${{ env.GITHUB_SHA_SHORT }}" 
-#          git push
+  e2e:
+    runs-on: ubuntu-latest
+    needs:
+      - test-and-build
+    permissions:
+      contents: read
+      packages: read
+    env:
+      BACKEND_IMAGE: ${{ needs.test-and-build.outputs.image_sha_tag }}
+      FRONTEND_IMAGE: ${{ github.event.inputs.frontend_image || 'ghcr.io/morbalint/kemkas-frontend:latest' }}
+      E2E_IMAGE: ${{ github.event.inputs.e2e_image || 'ghcr.io/morbalint/kemkas-e2e:latest' }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup docker compose
+        uses: docker/setup-compose-action@v2
+      - name: Pull images for test run
+        run: docker compose -f docker-compose.e2e.yaml pull
+      - name: Run Docker Compose E2E tests
+        run: docker compose -f docker-compose.e2e.yaml up --no-build --abort-on-container-exit --exit-code-from e2e e2e
+      - name: Upload Playwright HTML report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: e2e/playwright-report
+          if-no-files-found: ignore
+      - name: Upload Playwright test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-test-results
+          path: e2e/test-results
+          if-no-files-found: ignore
+      - name: Tear down Docker Compose stack
+        if: always()
+        run: docker compose -f docker-compose.e2e.yaml down -v --remove-orphans
